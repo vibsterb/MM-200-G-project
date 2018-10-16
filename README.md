@@ -1,2 +1,1 @@
-# THE_MAGNIFICENT_LISTING
-Medium Difficulty Group Assignment Appdevelopment
+tester server-oppsett
