@@ -1,11 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const router = express.Router();
+const db = require("./js/db.js");
+const user = require("./js/user.js");
 
 app.set('port', (process.env.PORT ||8080));
 app.use(express.static('public'));
-
 app.use(bodyParser.json());
+app.use(user);
+//app.use(db);
+
 app.listen(app.get('port'), function(){
 console.log('server running', app.get('port'));
 });
@@ -13,7 +18,7 @@ console.log('server running', app.get('port'));
 const users = [];
 
 //create user
-app.post("/api/user",function(req,res){
+app.post("/app/user",function(req,res){
 
 	let user = req.body;
 	let isUser = false;
@@ -37,7 +42,7 @@ app.post("/api/user",function(req,res){
 })
 
 //user login
-app.post("/api/login",function(req,res){
+app.post("/app/login",function(req,res){
 
 	let user = req.body;
 	let name = "";

@@ -1,5 +1,3 @@
-"use strict"
-
 //---------create user-----------
 let elem1 = document.getElementById("elem1");
 elem1.onclick = newUser;
@@ -58,7 +56,7 @@ function passwordTest(psw){
 
 function sendDataTilServer(name, email, password){
 
-  fetch("/api/user", {
+  fetch("/app/user", {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -114,7 +112,7 @@ function loginData() {
 
 function logInUser(email, password){
 
-  fetch("/api/login", {
+  fetch("/app/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -140,4 +138,27 @@ function loginDisplay(data){
 
 function loginError(err){
   console.log(err);
+}
+
+
+//db-test
+let elem3 = document.getElementById("elem3");
+elem3.onclick = dbData;
+
+function dbData(){
+
+  fetch('app/allUsers').then(dbResponse).then(dbDisplay).catch(dbError);
+
+}
+
+function dbResponse(resp){
+    return resp.json();
+}
+
+function dbDisplay(dbdata){
+  console.log(dbdata);
+}
+
+function dbError(err){
+    console.error(err)
 }
