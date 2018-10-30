@@ -1,47 +1,41 @@
-const { Client } = require('pg'); //krever npm install pg først
+const { Client } = require('pg');
 const connectionString = process.env.DATABASE_URL;
-const db = {};
+const localConnectionString = 'postgres://dibyhwpyxdtsqk:2e9853a21210046b952b68c2c4c4a639a7320670c095b1a50c965f2ee250f16c@ec2-54-217-236-201.eu-west-1.compute.amazonaws.com:5432/dasffosd9vgdh9';
 
-function runQuery(query) {
-    let respons = null;
-    const client = new Client({
-        connectionString: connectionString,
-        ssl: true
-    });
+const db = {} //må et objekt returneres fra modulen?
 
-    try {
-        client.connect()
-        if (client) {
-          console.log('db-client connected');
-            client.query(query, (err, res) => {
-                console.log('Error from client.query: '+ err);
-                console.log('result from client.query: ' + res);
-                respons = res;
-                client.end()
-            })
+db.runQuery = async function(sql){
+  const client = new Client({
+    connectionString: connectionString || localConnectionString,
+    ssl: true,
+  });
 
-        }
-    } catch (e) { /*error*/ }
+  let response = null;
+//  let sql = 'SELECT * FROM public."Users";';
+  //let sql = 'SELECT table_schema,table_name FROM information_schema.tables;';
 
-    return respons;
-}
+  try {
+    await client.connect();
 
-//ulike operasjoner for databasen
-db.insert = function (query) {
-    return runQuery(query);
-}
+      console.log('db-client connected');
+      let res = await client.query(sql).then(function(res){
+        return res;
+      }).catch(function(err){
+        console.error(err);
+      });
 
-db.select = function (query) {
-    return runQuery(query);
-}
+       for (let row in res.rows) {
+         //console.log(res.rows[row]);
+         console.log(JSON.stringify(res.rows[row]));
+       }
+       response = res.rows;
+       await client.end();
 
-db.delete = function (query) {
-    //db.update(query);
-    return runQuery(query);
-}
+  }
 
-db.update = function (query) {
-    return runQuery(query);
+  catch (error) { /*error*/ }
+
+  return response;
 }
 
 module.exports = db;

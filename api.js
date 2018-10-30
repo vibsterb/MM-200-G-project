@@ -1,16 +1,12 @@
 /* create user*/
-
 METHOD: POST
-ENDPOINT: api/user
-BODY (json): {"name":"Mr.X", "email":"mrx@uia.no", "password":"123456"}
-RESPONSE (json): {"id":123, "name":"Mr.X", "email":"mrx@uia.no", "password":"123456"}
+ENDPOINT: app/user
+BODY (json): {"name": string, "email": string, "password": string}
+RESPONSE (json): {"id": integer, "name": string, "email": string, "password": string}
 
 
-/* login */
-
+/* login user */
 METHOD: POST
-ENDPOINT: api/login
-BODY (json): {"email":"mrx@uia.no", "password":"123456"}
-//RESPONSE (json): {"email":"mrx@uia.no", "password":"123456"}
+ENDPOINT: app/login
+BODY (json): {"email": string, "password": string}
 RESPONSE (json): {user}
-//RESPONSE (json): name

@@ -1,14 +1,8 @@
-//---------create user-----------
-let elem1 = document.getElementById("elem1");
-elem1.onclick = newUser;
+"use strict"
 
-function newUser(){
-  elem1.classList.add("hidden");
-  let newDiv= document.getElementById("new");
-  newDiv.classList.remove("hidden");
-  let btn = document.getElementById("newBtn");
-  btn.onclick = henteData;
-}
+//---------create user-----------
+let btnNew = document.getElementById("newBtn");
+btnNew.onclick = henteData;
 
 function henteData(){
   let newName = document.getElementById("newName").value;
@@ -16,7 +10,7 @@ function henteData(){
   let newPsw = document.getElementById("newPsw").value;
 
   let validData = validation(newName, newEmail, newPsw);
-
+/// todo forenkle validering av data
   if(validData) {
     sendDataTilServer(newName, newEmail, newPsw);
   }
@@ -54,8 +48,8 @@ function passwordTest(psw){
   }
 }
 
+///todo bedre navn?
 function sendDataTilServer(name, email, password){
-
   fetch("/app/user", {
     method: "POST",
     headers: {
@@ -73,16 +67,13 @@ function newUserResponse(response){
   return response.json();
 }
 
-//data inneholder res.json() fra server-fila
-function newUserDisplay(data){
-
+function newUserDisplay(data){ console.log(data);
   let res = document.getElementById("userResp");
-  if(typeof data === 'object'){
-
-    res.innerHTML = "User created with userid " + data["id"];
+  if(data){
+    res.innerHTML = "User created with userid " + data[0].id;
   }
   else {
-    res.innerHTML = data;
+  //???
   }
 }
 
@@ -90,19 +81,9 @@ function newUserError(err){
   res.innerHTML = "Something went wrong. Errormessage: " + err;
 }
 
-
 //-------------- Login user------------
-
-let elem2 = document.getElementById("elem2");
-elem2.onclick = loginUser;
-
-function loginUser(){
-  elem2.classList.add("hidden");
-  let login = document.getElementById("divLogin");
-  login.classList.remove("hidden");
-  let btn = document.getElementById("login");
-  btn.onclick = loginData;
-}
+let btnLogin = document.getElementById("login");
+btnLogin.onclick = loginData;
 
 function loginData() {
   let userEmail = document.getElementById("userEmail").value;
@@ -111,7 +92,6 @@ function loginData() {
 }
 
 function logInUser(email, password){
-
   fetch("/app/login", {
     method: "POST",
     headers: {
@@ -140,25 +120,48 @@ function loginError(err){
   console.log(err);
 }
 
-
 //db-test
-let elem3 = document.getElementById("elem3");
-elem3.onclick = dbData;
+let btnDb = document.getElementById("dbdata");
+btnDb.onclick = dbData;
 
-function dbData(){
-
-  fetch('app/allUsers').then(dbResponse).then(dbDisplay).catch(dbError);
+async function dbData(){
+///todo try-catch i denne?
+  let url = 'app/allUsers';
+  let response = await fetch(url); //console.log(response);
+  let data = await response.json(); console.log(data);
 
 }
 
-function dbResponse(resp){
-    return resp.json();
+//delete user
+let btnDel = document.getElementById("delete");
+btnDel.onclick = getData;
+
+///todo unødvendig mellomledd?
+function getData() {
+  let id = document.getElementById("userId").value;
+  delUser(id);
 }
 
-function dbDisplay(dbdata){
-  console.log(dbdata);
+function delUser(id){
+  fetch('app/deleteUser', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body: JSON.stringify({
+      id: id
+    })
+  }).then(delResponse).then(delDisplay).catch(delError);
 }
 
-function dbError(err){
-    console.error(err)
+function delResponse(response){
+  return response.json();
+}
+
+function delDisplay(data){
+  console.log(data);
+}
+
+function delError(err){
+  
 }
