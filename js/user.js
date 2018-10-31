@@ -27,11 +27,10 @@ router.post('/app/user', async function(req,res,next){
 
   console.log(req.body);
 
-  /// todo serial id/another  (select max(id) from Users)
-  /// todo role
-  let sql =  `insert into public."Users" ("id", "email", "name", "password")
-   values(4, '${userEmail}', '${userName}', '${userPsw}')
-   returning "id", "email", "name", "password";`;
+  /// todo bare returnere id?
+  let sql =  `insert into public."Users" ("name", "email", "password")
+   values('${userName}', '${userEmail}', '${userPsw}')
+   returning "id", "name", "email", "password";`;
 
   try {
     let data = await db.runQuery(sql);
