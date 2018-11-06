@@ -10,12 +10,14 @@
 <!-- /// todo gjøre om til templates
 all inputfields requred, email type email
 input in form, submit when all ok-->
-  <div>
-    <span>New user </span>
-    <input id="newName" type="text" placeholder="Name" required>
-    <input id="newEmail" type="email" placeholder="Email address" required>
-    <input id="newPsw" type="password" placeholder="Password" required>
+<div>
+  <span>New user </span>
+  <form id="newUser">
+    <input id="newName" name="newName" type="text" placeholder="Name" required>
+    <input id="newEmail" name="newEmail" type="email" placeholder="Email address" required>
+    <input id="newPsw"  name="newPsw" type="password" placeholder="Password" required>
     <button id="newBtn">Create user</button>
+  </form>
     <p id="userResp"></p>
   </div>
 

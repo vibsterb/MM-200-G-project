@@ -8,7 +8,7 @@ router.get('/app/allUsers',async function(req,res,next){
 
   try {
     let users = await db.runQuery(sql);
-    console.log('innhold fra select-query i users.js: ' + JSON.stringify(users));
+    //console.log('innhold fra select-query i users.js: ' + JSON.stringify(users));
     res.status(200).json(JSON.stringify(users));
     //må ha enten next() eller end() ???
   }
@@ -25,8 +25,6 @@ router.post('/app/user', async function(req,res,next){
   let userEmail = req.body.email;
   let userPsw = req.body.password;
 
-  console.log(req.body);
-
   /// todo bare returnere id?
   let sql =  `insert into public."Users" ("name", "email", "password")
    values('${userName}', '${userEmail}', '${userPsw}')
@@ -42,17 +40,18 @@ router.post('/app/user', async function(req,res,next){
   }
 });
 
-router.post('/app/deleteUser', async function(req, res, next){
+//slette bruker fra databasen
+router.delete('/app/deleteUser/:id/', async function(req, res, next){
 
-  let id = req.body.id;
-  console.log(req.body);
+  let id = req.params.id;
 
-  ///todo returnere noe?
-  let sql = `delete from public."Users" where id = '${id}';`;
+  let sql = `delete from public."Users" where id = '${id}'
+  returning id ;`;
 
   try {
     let data = await db.runQuery(sql);
-    res.status(200).json(data);
+    res.status(200).json(data); //hvorfor er dette et array?
+
   }
 
   catch(err) {

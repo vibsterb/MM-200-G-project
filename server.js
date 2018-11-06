@@ -16,30 +16,6 @@ app.listen(app.get('port'), function(){
 
 const users = [];
 
-//------ create user on server------
-/*app.post("/app/user",function(req,res){
-
-	let user = req.body;
-	let isUser = false;
-
-	for(let i in users){
-		if(user.email === users[i].email){
-			isUser = true;
-		}
-	}
-
-	if(!isUser){
-		user.email = req.body.email;
-		user.name = req.body.name;
-		user.password = req.body.password;
-		user.id = users.length + 1;
-		users.push(user);
-		res.json(user).end();
-	}
-	else
-	res.json("User already exists, try another email address").end();
-})*/
-
 //------ user login ------
 app.post("/app/login",function(req,res){
 

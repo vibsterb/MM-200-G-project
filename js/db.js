@@ -11,25 +11,22 @@ db.runQuery = async function(sql){
   });
 
   let response = null;
-//  let sql = 'SELECT * FROM public."Users";';
-  //let sql = 'SELECT table_schema,table_name FROM information_schema.tables;';
 
   try {
     await client.connect();
 
-      console.log('db-client connected');
-      let res = await client.query(sql).then(function(res){
-        return res;
-      }).catch(function(err){
-        console.error(err);
-      });
+    let res = await client.query(sql).then(function(res){
+      return res;
+    }).catch(function(err){
+      console.error(err);
+    });
 
-       for (let row in res.rows) {
-         //console.log(res.rows[row]);
-         console.log(JSON.stringify(res.rows[row]));
-       }
-       response = res.rows;
-       await client.end();
+    for (let row in res.rows) {
+      //console.log(res.rows[row]);
+    //  console.log(JSON.stringify(res.rows[row]));
+    }
+    response = res.rows;
+    await client.end();
 
   }
 
