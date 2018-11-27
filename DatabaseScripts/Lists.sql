@@ -3,6 +3,6 @@ id serial PRIMARY KEY,
 owner int,
 name text NOT NULL,
 done BOOLEAN,
-tag text,
+shareduser int,
 FOREIGN KEY (owner) REFERENCES "Users"(id)
 )

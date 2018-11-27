@@ -1,45 +1,146 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Things todo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+  <title>To do lists</title>
 </head>
 
 <body>
-  <h3>Things todo</h3>
-<!-- /// todo gjøre om til templates
-all inputfields requred, email type email
-input in form, submit when all ok-->
-<div>
-  <span>New user </span>
-  <form id="newUser">
-    <input id="newName" name="newName" type="text" placeholder="Name" required>
-    <input id="newEmail" name="newEmail" type="email" placeholder="Email address" required>
-    <input id="newPsw"  name="newPsw" type="password" placeholder="Password" required>
-    <button id="newBtn">Create user</button>
-  </form>
-    <p id="userResp"></p>
+  <!-- Meny dropdown -->
+  <div class="dropdown" style="float:right;">
+    <button class="dropbtn">Menu</button>
+    <div class="dropdown-content">
+
+      <div id="menu">
+        <div id="userInfo"></div>
+        <hr>
+        <button id="allLists">Back to lists</button><br>
+        <button id="updUser">Settings</button><br>
+        <button id="metrics">User metrics</button>
+        <button id="logout">Log out</button><br>
+
+      </div>
+
+    </div>
   </div>
 
-  <div>
-    <span>Log in</span>
-    <input id="userEmail" type="text" placeholder="email">
-    <input id="userPsw" type="password" placeholder="password">
-    <button id="login">Log in</button>
-    <p id="loginResp"></p>
-  </div>
+  <!-- User responses -->
+  <div id="container"></div>
+  <p id="userResponse"></p>
 
-  <div>
-    <span>Delete user</span>
-    <input id="userId" type="text" placeholder="id">
-    <button id="delete">Delete user</button>
-    <p id="deleteResp"></p>
-  </div>
 
-  <div>
-    <span>Teste å hente db-data</span>
-    <button id="dbdata">Hent data</button>
-  </div>
+  <!-- Log in -->
+  <template id="userTemplate">
+    <div id="cssWrap">
+      <div class="loginDiv">
+        <h1 style="color:floralwhite;">Login</h1>
+        <p style="color:floralwhite;">Please fill in this form to log in.</p>
+        <hr>
+
+        <input id="userName" type="text" placeholder=" Username">
+        <br>
+        <input id="userPsw" type="password" placeholder=" Password">
+        <br>
+        <button id="login" class="cssBtn">Log in</button>
+        <p id="userResp"></p>
+      </div>
+
+      <!-- Sign up -->
+      <form id="newUser">
+        <div class=signupDiv>
+          <h1 style="color:floralwhite;">Sign Up</h1>
+          <p style="color:floralwhite;">Please fill in this form to create an account.</p>
+          <hr>
+
+          <input type="text" placeholder=" Username" name="newUsername" id="newUsername" required>
+          <br>
+          <input type="text" placeholder=" Name" name="newName" id="newName" required>
+          <br>
+          <input type="email" placeholder=" Enter Email" name="newEmail" id="newEmail" required>
+          <br>
+          <input type="password" placeholder=" Enter Password" name="newPsw" id="newPsw" required>
+          <br>
+          <button id="newBtn" class="cssBtn">Create user</button>
+          <p id="createUserResp"></p>
+        </div>
+      </form>
+    </div>
+  </template>
+
+  <!-- Lists and making them -->
+  <template id="listViewTemplate">
+    <div>
+      <form id="createList">
+        <div id="myLists"></div>
+        <br>
+        <hr>
+        <span><h1 style="color:floralwhite">Create new list</h1></span>
+
+        <input id="listName" type="text" placeholder=" List Name" required>
+        <br>
+        <button id="listBtn"  class="cssBtn">Create list</button>
+        <br>
+        <p id="listResp"></p>
+      </form>
+    </div><br>
+  </template>
+
+  <template id="listDetailsTemplate">
+
+    <!-- Delete and Edit name button -->
+    <div align="left">
+      <br>
+      <button id="btnDelList"  class="cssBtn">Delete list</button>
+      <button id="btnUpdList" class="cssBtn">Edit list name</button>
+      <button id="btnShareList" class="cssBtn">Share list</button>
+      <div class="dropdown">
+            <button class="cssBtn" id="btnTagList">Tag Search</button>
+            <div id="dropTags" class="dropMenu">
+            </div>
+        </div>
+      <p id="delListResp"></p>
+    </div>
+
+    <!-- Add item to list-->
+    <div>
+      <form id="addItem">
+        <span><br></span>
+        <input id="listItem" type="text" placeholder=" Add List Items" required>
+        <button id="itemBtn"  class="cssBtn">Add item</button>
+        <br>
+        <p id="itemResp"></p>
+      </form>
+    </div>
+
+    <!-- Show inside of list (aka items) -->
+    <div>
+      <div id="currentList"></div>
+      <div id="itemsContainer"></div>
+    </div>
+
+  </template>
+
+  <template id="updateUserTemplate"><br>
+    <div id="updateUser"><h1 align=center>Settings</h1></div>
+
+    <div id="updUserSelect">
+      <span><h2>What do you want to update?</h2></span>
+      <div id="chooseUpdate">
+        <div id="name" class="settings">Name</div><br>
+        <div id="username" class="settings">Username</div><br>
+        <div id="email" class="settings">Email address</div><br>
+        <div id="password" class="settings">Password</div><br>
+      </div>
+      <button id="delete" align=center>Delete account</button>
+    </div>
+  </template>
+
+  <template id="userMetricsTemplate">
+    <div id="userMetrics">User metrics</div>
+
+  </template>
+
 
   <script src="js/app.js" type="text/javascript"></script>
 </body>
